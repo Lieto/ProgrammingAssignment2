@@ -1,15 +1,40 @@
-## Put comments here that give an overall description of what your
-## functions do
+## These functions implement matrix class, which has attributes and methods.
 
-## Write a short comment describing this function
+##This function creates matrix, which has cacheable state information,
+## for instance inverse
 
 makeCacheMatrix <- function(x = matrix()) {
-
+  
+  inverse <- NULL
+  set <- function(y) {
+    x <<- y
+    inverse <<- NULL
+  }
+  
+  get <- function() x
+  setinverse <- function(i) inverse <<- i
+  getinverse <- function() inverse
+  
+  list(set = set, get = get, setinverse = setinverse, getinverse = getinverse)
 }
 
 
-## Write a short comment describing this function
+## This function returns inverse of matrix. It calculates the inverse,
+## if not calculated before
 
-cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+cacheSolve = function(x, ...) {
+  
+  i <- x$getinverse()
+  
+  if (!is.null(i)) {
+    message("getting cached data")
+    return(i)
+  }
+  
+  data <- x$get()
+  
+  i <- solve(data)
+  
+  x$setinverse(i)
+  i
 }
